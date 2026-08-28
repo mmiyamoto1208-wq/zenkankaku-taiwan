@@ -144,6 +144,9 @@ h1,h2,h3{ word-break:normal; text-wrap:balance; }
 /* 並べる写真は縦横比をそろえる。縦位置の写真は中央でトリミングされる。
    （高さがばらつくと段組みが崩れて、余白だけが目立つため） */
 .trio .ph,.gal .ph,.duo .ph{ aspect-ratio:4/3; }
+/* 段組みの中に縦位置の写真を置くとき（横位置とそろえず、比率のまま少し小さく） */
+.duo .fig--tall{ max-width:min(100%,400px); margin-inline:auto; }
+.duo .fig--tall .ph{ aspect-ratio:1033/1546; }
 /* 単独で置く縦位置の写真は、幅を絞って高くなりすぎないようにする */
 .fig--portrait{ max-width:min(100%,440px); }
 .fig--portrait .ph{ aspect-ratio:auto; }
