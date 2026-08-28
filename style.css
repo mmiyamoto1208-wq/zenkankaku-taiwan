@@ -92,34 +92,21 @@ h1,h2,h3{ word-break:normal; text-wrap:balance; }
   .hd__nav{ gap:1rem; }
 }
 
-/* ── ヒーロー（告知ビジュアルをそのまま見せる） ───────
-   ビジュアルにタイトルも日付も刷り込まれているため、
-   文字を重ねずに一枚の告知として見せる。h1は読み上げ用に隠して置く。 */
-.hero{
-  background:var(--bg);
-  padding-block:clamp(36px,5vw,64px) clamp(48px,7vw,88px);
-  border-bottom:1px solid var(--line);
-}
+/* ── ヒーロー（告知ビジュアルを全幅で見せる） ─────────
+   ビジュアルにタイトルも日付も刷り込まれているので、文字は重ねない。
+   画面幅いっぱいに、トリミングせず一枚をそのまま出す。
+   h1は画面には出さず、読み上げと検索のために残す。 */
+.hero{ background:var(--bg); border-bottom:1px solid var(--line); }
 .hero__h1{
   position:absolute; width:1px; height:1px; margin:-1px; padding:0;
   overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0;
 }
-.hero__stage{
-  width:100%; max-width:var(--wrap); margin-inline:auto;
-  padding-inline:clamp(20px,5vw,48px);
-  display:flex; flex-direction:column; align-items:center;
+.hero__stage{ width:100%; }
+.hero__poster{ display:block; width:100%; height:auto; }
+.hero__in{
+  text-align:center;
+  padding-block:clamp(30px,4vw,48px) clamp(44px,6vw,76px);
 }
-.hero__poster{
-  display:block; width:auto; height:auto;
-  max-width:100%; max-height:min(72vh,820px);
-  object-fit:contain;
-  box-shadow:0 20px 56px rgba(0,0,0,.55);
-}
-.hero__cap{
-  margin-top:1.1rem; max-width:34em; text-align:center;
-  font-size:.78rem; line-height:1.95; color:var(--ink-dim);
-}
-.hero__in{ margin-top:clamp(26px,3.5vw,42px); text-align:center; }
 .hero__done{
   display:inline-block; margin-bottom:1.1rem; padding:.35rem 1rem;
   border:1px solid var(--line-2); font-size:.72rem; letter-spacing:.16em; color:var(--ink-dim);
