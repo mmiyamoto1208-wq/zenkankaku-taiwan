@@ -166,6 +166,21 @@ h1,h2,h3{ word-break:normal; text-wrap:balance; }
 .full{ position:relative; }
 .full img{ width:100%; }
 
+/* ── 旅の写真ギャラリー ───────────────────────────────
+   段組みに流し込むだけの素朴な組み方。縦位置と横位置が混ざっても
+   トリミングせずに済み、写真の比率がそのまま残る。 */
+.gal-grid{
+  columns:3; column-gap:clamp(10px,1.4vw,18px);
+}
+@media (max-width:900px){ .gal-grid{ columns:2; } }
+@media (max-width:560px){ .gal-grid{ columns:1; } }
+.gal-grid figure{
+  break-inside:avoid; -webkit-column-break-inside:avoid;
+  margin:0 0 clamp(10px,1.4vw,18px);
+  background:var(--bg3);
+}
+.gal-grid img{ display:block; width:100%; height:auto; }
+
 /* ── 開催概要テーブル ─────────────────────────────────── */
 .info{ border-top:1px solid var(--line); }
 .info th,.info td{
