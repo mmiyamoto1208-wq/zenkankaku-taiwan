@@ -167,19 +167,47 @@ h1,h2,h3{ word-break:normal; text-wrap:balance; }
 .full img{ width:100%; }
 
 /* ── 旅の写真ギャラリー ───────────────────────────────
-   段組みに流し込むだけの素朴な組み方。縦位置と横位置が混ざっても
-   トリミングせずに済み、写真の比率がそのまま残る。 */
+   12列のグリッドに、大小まちまちの枠を置いていく。
+   写真の縦横比はそのまま。ときどき画面の端まで広がる一枚を挟んで、
+   スクロールの調子を変える。 */
 .gal-grid{
-  columns:3; column-gap:clamp(10px,1.4vw,18px);
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:clamp(18px,2.6vw,40px);
+  align-items:start;
 }
-@media (max-width:900px){ .gal-grid{ columns:2; } }
-@media (max-width:560px){ .gal-grid{ columns:1; } }
+.gal-grid figure{ margin:0; grid-column:span 12; }
+.gal-grid img{ display:block; width:100%; height:auto; background:var(--bg3); }
+
+@media (min-width:560px) and (max-width:899px){
+  .gal-grid{ grid-template-columns:repeat(2,1fr); }
+  .gal-grid figure{ grid-column:span 1; }
+  .gal-grid .g-12{ grid-column:span 2; }
+}
+@media (min-width:900px){
+  /* .gal-grid figure（要素セレクタを含む）に負けないよう、親を付けて詳細度を上げる */
+  .gal-grid .g-4{ grid-column:span 4; }
+  .gal-grid .g-5{ grid-column:span 5; }  .gal-grid .g-6{ grid-column:span 6; }
+  .gal-grid .g-7{ grid-column:span 7; }  .gal-grid .g-8{ grid-column:span 8; }
+  .gal-grid .g-12{ grid-column:span 12; }
+}
+/* 全幅の一枚だけ、外側の余白を打ち消して画面の端まで出す */
+@media (min-width:560px){
+  .gal-grid .g-12{ margin-inline:calc(50% - 50vw); }
+}
+
+/* スクロールで現れる。列ごとに少しずつ間を置く */
 .gal-grid figure{
-  break-inside:avoid; -webkit-column-break-inside:avoid;
-  margin:0 0 clamp(10px,1.4vw,18px);
-  background:var(--bg3);
+  opacity:0; transform:translate3d(0,26px,0);
+  transition:opacity .9s var(--ease), transform 1.1s var(--ease);
 }
-.gal-grid img{ display:block; width:100%; height:auto; }
+.gal-grid figure.in{ opacity:1; transform:translate3d(0,0,0); }
+/* 現れたあとは、スクロールに合わせてゆっくり上下にずれる */
+.gal-grid figure.in.drift{ transition:opacity .9s var(--ease); }
+
+@media (prefers-reduced-motion:reduce){
+  .gal-grid figure{ opacity:1; transform:none; transition:none; }
+}
 
 /* ── 開催概要テーブル ─────────────────────────────────── */
 .info{ border-top:1px solid var(--line); }
