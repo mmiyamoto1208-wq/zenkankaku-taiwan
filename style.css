@@ -209,6 +209,35 @@ h1,h2,h3{ word-break:normal; text-wrap:balance; }
   .gal-grid figure{ opacity:1; transform:none; transition:none; }
 }
 
+/* ── 当日の写真：横に流れる帯 ─────────────────────────
+   同じ8枚を2組ならべ、半分ぶん動かして先頭に戻す。継ぎ目が出ない。
+   カーソルを載せているあいだは止まる。 */
+.river{
+  overflow:hidden; background:var(--bg2);
+  padding-block:clamp(44px,5.5vw,80px);
+  border-block:1px solid var(--line);
+}
+/* 隙間は gap ではなく各コマの右余白で作る。
+   gap だと最後のコマに余白が付かず、半分ぶん動かしたときに
+   隙間ひとつぶんズレて、一周ごとに小さく飛ぶため。 */
+.lane{
+  display:flex; width:max-content;
+  animation:flow 52s linear infinite;
+}
+.lane:hover{ animation-play-state:paused; }
+@keyframes flow{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+.lane figure{
+  flex:0 0 auto; margin:0 clamp(10px,1.2vw,16px) 0 0;
+  width:clamp(170px,21vw,260px); aspect-ratio:1/1;
+  overflow:hidden; background:var(--bg3);
+}
+.lane img{ display:block; width:100%; height:100%; object-fit:cover; }
+/* 動きを控える設定のときは、流さずに指で送れるようにする */
+@media (prefers-reduced-motion:reduce){
+  .lane{ animation:none; }
+  .river{ overflow-x:auto; padding-inline:clamp(20px,5vw,48px); }
+}
+
 /* ── 開催概要テーブル ─────────────────────────────────── */
 .info{ border-top:1px solid var(--line); }
 .info th,.info td{
@@ -234,6 +263,13 @@ h1,h2,h3{ word-break:normal; text-wrap:balance; }
 .exhibitor__yomi{ font-size:.76rem; letter-spacing:.2em; color:var(--red); margin-bottom:1.1rem; }
 .exhibitor__text{ font-size:.94rem; line-height:2.05; color:var(--ink-sub); }
 .exhibitor__menu{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
+.exhibitor__ig{
+  display:inline-block; margin-top:1.5rem;
+  font-size:.8rem; letter-spacing:.06em; color:var(--yellow); text-decoration:none;
+  padding-bottom:.25rem; border-bottom:1px solid rgba(240,194,75,.4);
+  transition:border-color .25s var(--ease);
+}
+.exhibitor__ig:hover{ border-bottom-color:var(--yellow); }
 .exhibitor__menu li{
   font-size:.8rem; letter-spacing:.06em; padding:.4rem 1rem;
   border:1px solid var(--line-2); color:var(--ink);
